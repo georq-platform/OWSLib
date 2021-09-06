@@ -162,6 +162,7 @@ class WebFeatureService_(object):
         method="Get",
         startindex=None,
         sortby=None,
+        viewparams=None,
     ):
         """Formulate proper GetFeature request using KVP encoding
         ----------
@@ -189,7 +190,9 @@ class WebFeatureService_(object):
             List of property names whose values should be used to order
             (upon presentation) the set of feature instances that
             satify the query.
-
+        viewparams: dict (optional)
+            Variable amount of extra information sent to the server for 
+            parametric views.
         There are 3 different modes of use
 
         1) typename and bbox (simple spatial query)
@@ -243,6 +246,11 @@ class WebFeatureService_(object):
                 request[param] = storedQueryParams[param]
         if outputFormat is not None:
             request["outputFormat"] = outputFormat
+        if viewparams is not None:
+            viewParamsStr = ""
+            for k,v in viewparams.items():
+                viewParamsStr = viewParamsStr + f"{k}:{v};"
+            request["viewparams"] = viewParamsStr
 
         data = urlencode(request, doseq=True)
 
@@ -298,7 +306,6 @@ class WebFeatureService_(object):
             List of property names whose values should be used to order
             (upon presentation) the set of feature instances that
             satify the query.
-
         There are 5 different modes of use
 
         1) typename and bbox (simple spatial query)

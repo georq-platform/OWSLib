@@ -232,6 +232,7 @@ class WebFeatureService_2_0_0(WebFeatureService_):
         outputFormat=None,
         startindex=None,
         sortby=None,
+        viewparams=None,
     ):
         """Request and return feature data as a file-like object.
 
@@ -270,7 +271,9 @@ class WebFeatureService_2_0_0(WebFeatureService_):
             List of property names whose values should be used to order
             (upon presentation) the set of feature instances that
             satify the query.
-
+        viewparams: dict (optional)
+            Variable amount of extra information sent to the server for 
+            parametric views.
         There are 5 different modes of use
 
         1) typename and bbox (simple spatial query)
@@ -304,6 +307,7 @@ class WebFeatureService_2_0_0(WebFeatureService_):
                 "Get",
                 startindex,
                 sortby,
+                viewparams,
             )
             log.debug("GetFeature WFS GET url %s" % url)
         else:
